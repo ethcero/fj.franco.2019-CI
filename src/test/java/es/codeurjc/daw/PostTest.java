@@ -23,7 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("Unitary tests")
-public class UnitaryTest {
+public class PostTest {
 
 	@Autowired
 	private MockMvc mvc;
@@ -38,7 +38,7 @@ public class UnitaryTest {
 		// CREAMOS UN NUEVO POST
 
 		Post post = new Post("Mi titulo", "Mi contenido");
-		
+
 		MvcResult result = mvc.perform(
 			post("/api/post")
 				.content(objectMapper.writeValueAsString(post))
@@ -49,12 +49,12 @@ public class UnitaryTest {
 		  .andReturn();
 
 		Post resultPost = objectMapper.readValue(
-			result.getResponse().getContentAsString(), 
+			result.getResponse().getContentAsString(),
 			Post.class
 		);
 
 		// COMPROBAMOS QUE EL POST SE HA CREADO CORRECTAMENTE
-		  
+
 		mvc.perform(
 			get("/api/post/"+resultPost.getId())
 				.content(objectMapper.writeValueAsString(post))
@@ -62,7 +62,7 @@ public class UnitaryTest {
 		  )
 	      .andExpect(status().isOk())
 	      .andExpect(jsonPath("$.title", equalTo(post.getTitle())));
-		
+
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class UnitaryTest {
 		// CREAMOS UN NUEVO POST
 
 		Post post = new Post("Mi titulo", "Mi contenido con comentarios");
-		
+
 		MvcResult createPostResult = mvc.perform(
 			post("/api/post")
 				.content(objectMapper.writeValueAsString(post))
@@ -81,7 +81,7 @@ public class UnitaryTest {
 		  .andReturn();
 
 		Post resultPost = objectMapper.readValue(
-			createPostResult.getResponse().getContentAsString(), 
+			createPostResult.getResponse().getContentAsString(),
 			Post.class
 		);
 
@@ -108,7 +108,7 @@ public class UnitaryTest {
 	      .andExpect(status().isOk())
 		  .andExpect(jsonPath("$.comments[0].author", equalTo(comment.getAuthor())))
 		  .andExpect(jsonPath("$.comments[0].message", equalTo(comment.getMessage())));
-		  ;	
+		  ;
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class UnitaryTest {
 		// CREAMOS UN NUEVO POST
 
 		Post post = new Post("Mi titulo", "Mi contenido con comentarios");
-		
+
 		MvcResult createPostResult = mvc.perform(
 			post("/api/post")
 				.content(objectMapper.writeValueAsString(post))
@@ -127,7 +127,7 @@ public class UnitaryTest {
 		  .andReturn();
 
 		Post postCreated = objectMapper.readValue(
-			createPostResult.getResponse().getContentAsString(), 
+			createPostResult.getResponse().getContentAsString(),
 			Post.class
 		);
 
@@ -142,7 +142,7 @@ public class UnitaryTest {
 		).andReturn();
 
 		Comment commentCreated = objectMapper.readValue(
-			createCommentResult.getResponse().getContentAsString(), 
+			createCommentResult.getResponse().getContentAsString(),
 			Comment.class
 		);
 
@@ -163,7 +163,7 @@ public class UnitaryTest {
 		  )
 	      .andExpect(status().isOk())
 		  .andExpect(jsonPath("$.comments",  IsEmptyCollection.empty()))
-		  ;		
+		  ;
 
 	}
 
