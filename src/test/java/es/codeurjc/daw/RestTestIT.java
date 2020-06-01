@@ -19,7 +19,7 @@ import io.restassured.http.ContentType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("REST tests")
-public class RestTest {
+public class RestTestIT {
 
     @LocalServerPort
     int port;
@@ -39,8 +39,8 @@ public class RestTest {
         // CREAMOS UN NUEVO POST
 
 		Post post = new Post("Mi titulo", "Mi contenido");
-    	
-        Post createdPost = 
+
+        Post createdPost =
             given().
                 request()
                     .body(objectMapper.writeValueAsString(post))
@@ -61,7 +61,7 @@ public class RestTest {
              assertThat().
              statusCode(200).
              body("title", equalTo(post.getTitle()));
-        
+
     }
 
     @Test
@@ -71,8 +71,8 @@ public class RestTest {
 		// CREAMOS UN NUEVO POST
 
 		Post post = new Post("Mi titulo", "Mi contenido");
-    	
-        Post createdPost = 
+
+        Post createdPost =
             given().
                 request()
                     .body(objectMapper.writeValueAsString(post))
@@ -81,7 +81,7 @@ public class RestTest {
                 post("/api/post/").
             then()
                 .extract().as(Post.class);
-        
+
         // CREAMOS UN NUEVO COMENTARIO
 
         Comment comment = new Comment("Juan", "Buen post");
@@ -98,7 +98,7 @@ public class RestTest {
             body("author", equalTo(comment.getAuthor())).
             body("message", equalTo(comment.getMessage()));
 
-        
+
         // COMPROBAMOS QUE EL COMENTARIO EXISTE
 
         when().
@@ -108,7 +108,7 @@ public class RestTest {
              statusCode(200).
              body("comments[0].author", equalTo(comment.getAuthor())).
              body("comments[0].message", equalTo(comment.getMessage()));
-    
+
     }
 
     @Test
@@ -118,8 +118,8 @@ public class RestTest {
         // CREAMOS UN NUEVO POST
 
 		Post post = new Post("Mi titulo", "Mi contenido");
-    	
-        Post createdPost = 
+
+        Post createdPost =
             given().
                 request()
                     .body(objectMapper.writeValueAsString(post))
@@ -128,7 +128,7 @@ public class RestTest {
                 post("/api/post/").
             then()
                 .extract().as(Post.class);
-        
+
         // CREAMOS UN NUEVO COMENTARIO
 
         Comment comment = new Comment("Juan", "Buen post");
@@ -147,10 +147,10 @@ public class RestTest {
             extract().as(Comment.class);
 
         // BORRAMOS EL COMENTARIO
-        
+
         when().
              delete(
-                 "/api/post/{postId}/comment/{commentId}", 
+                 "/api/post/{postId}/comment/{commentId}",
                  createdPost.getId(), createdComment.getId()
              ).
         then().
@@ -158,7 +158,7 @@ public class RestTest {
              statusCode(204);
 
 
-        
+
         // COMPROBAMOS QUE EL COMENTARIO NO EXISTE
 
         when().
@@ -167,7 +167,7 @@ public class RestTest {
              assertThat().
              statusCode(200).
              body("comments", IsEmptyCollection.empty());
-    
+
     }
-    
+
 }

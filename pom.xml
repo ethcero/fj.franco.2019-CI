@@ -20,6 +20,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>11</java.version>
+
+		<build.profile.id>dev</build.profile.id>
+		<skip.integration.tests>true</skip.integration.tests>
+		<skip.unit.tests>false</skip.unit.tests>
 	</properties>
 
 	<dependencies>
@@ -47,19 +51,6 @@
 			<version>3.0.6</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- SELENIUM -->
-		<dependency>
-			<groupId>io.github.bonigarcia</groupId>
-			<artifactId>webdrivermanager</artifactId>
-			<version>3.3.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>3.141.59</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -78,5 +69,60 @@
 		</dependency>
 
 	</dependencies>
+
+	<profiles>
+		<profile>
+				<id>dev</id>
+		</profile>
+		<profile>
+				<id>integration-test</id>
+				<properties>
+						<build.profile.id>integration-test</build.profile.id>
+						<skip.integration.tests>false</skip.integration.tests>
+						<skip.unit.tests>true</skip.unit.tests>
+				</properties>
+		</profile>
+</profiles>
+
+<build>
+	<plugins>
+
+	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-surefire-plugin</artifactId>
+		<version>3.0.0-M4</version>
+		<configuration>
+				<skipTests>${skip.unit.tests}</skipTests>
+				<excludes>
+						<exclude>**/*IT.java</exclude>
+				</excludes>
+		</configuration>
+</plugin>
+
+<!-- Used for integration tests -->
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-failsafe-plugin</artifactId>
+	<version>3.0.0-M4</version>
+	<executions>
+		 <execution>
+				<id>run-integration-tests</id>
+				<phase>integration-test</phase>
+				<goals>
+					 <goal>integration-test</goal>
+					 <goal>verify</goal>
+				</goals>
+		 </execution>
+	</executions>
+	<configuration>
+		 <skipTests>${skipTests}</skipTests>
+		 <skipITs>${skipITs}</skipITs>
+	</configuration>
+</plugin>
+
+	</plugins>
+</build>
+
+
 
 </project>
