@@ -21,9 +21,10 @@ jobs:
         java-version: 11
     - name: build
       run: mvn -B package --file pom.xml
-    - name: Set env
-      run: echo ::set-env name=ARTIFACT::${GITHUB_REF#refs/*/}.jar
+    - name: Get branch name
+      id: branch_name
+      run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
     - uses: actions/upload-artifact@v2
       with:
-        name: $ARTIFACT
+        name: ${{steps.branch_name.outputs.branch_name}}.jar
         path: target/**/*.jar
