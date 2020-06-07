@@ -1,6 +1,6 @@
 # This workflow will execute tests on all branches except master and develop
 
-name: Execute unit tests
+name: Build branch and publish artifact
 
 on:
   push:
@@ -19,5 +19,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Execute unit tests
-      run: mvn -B test --file pom.xml
+    - name: build
+      run: mvn -B package --file pom.xml
+    - name: Get branch name
+      id: branch_name
+      run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{steps.branch_name.outputs.branch_name}}.jar
+        path: target/**/*.jar
