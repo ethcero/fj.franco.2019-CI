@@ -21,5 +21,8 @@ jobs:
     - name: Execute unit tests
       run: mvn -B test
     - name: build docker image and push to dockerhub with JIB
-      run: mvn compile jib:build -Dimage=franco87/practica-ci:develop -Djib.to.auth.username=$DOCKERHUB_USER	 -Djib.to.auth.password=DOCKERHUB_PASSWORD
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: mvn compile jib:build -Dimage=franco87/practica-ci:develop -Djib.to.auth.username=$DOCKERHUB_USER	 -Djib.to.auth.password=$DOCKERHUB_PASSWORD
 
