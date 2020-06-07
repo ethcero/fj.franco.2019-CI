@@ -24,6 +24,10 @@
 		<build.profile.id>dev</build.profile.id>
 		<skip.integration.tests>true</skip.integration.tests>
 		<skip.unit.tests>false</skip.unit.tests>
+		<sonar.projectKey>franco87_-fj.franco.2019-CI</sonar.projectKey>
+		<sonar.organization>franco87</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.login>308c9a2ddcd4bb1b8deee62ee5be9e022a94b15e</sonar.login>
 	</properties>
 
 	<dependencies>

@@ -1,6 +1,6 @@
-# This workflow will execute integration tests once a day
+# This workflow will execute quality code tests once a day
 
-name: Execute integration tests
+name: Execute sonarcloud
 
 on:
   schedule:
@@ -18,4 +18,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B integration-test -p integration-test --file pom.xml
+      run: mvn verify sonar:sonar
