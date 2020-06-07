@@ -20,7 +20,7 @@ jobs:
       with:
         java-version: 11
     - name: Execute unit tests
-      run: mvn -B test --file pom.xml
+      run: mvn -B package --file pom.xml
     - uses: actions/upload-artifact@v2
       with:
         path: target/**/*.jar
