@@ -4,7 +4,7 @@ name: Execute sonarcloud
 
 on:
   schedule:
-    - cron:  '0 * * * *'
+    - cron:  '0 1 * * *'
 
 jobs:
   build:
