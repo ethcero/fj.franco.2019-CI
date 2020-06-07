@@ -3,10 +3,9 @@
 name: Build branch and publish artifact
 
 on:
-  push:
-    branches-ignore:
-      - master
-      - develop
+  # Run tests for any PRs.
+  pull_request:
+
 
 jobs:
   build:
