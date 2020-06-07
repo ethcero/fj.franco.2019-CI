@@ -19,8 +19,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Execute unit tests
+    - name: build
       run: mvn -B package --file pom.xml
+    - name: Set env
+      run: echo ::set-env name=ARTIFACT::${GITHUB_REF#refs/*/}.jar
     - uses: actions/upload-artifact@v2
       with:
+        name: $ARTIFACT
         path: target/**/*.jar
