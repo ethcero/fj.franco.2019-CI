@@ -1,11 +1,9 @@
 # This workflow will build a docker image from master where a tag is created. The image will be pushed to docker hub
 
-name: Build and push nightly develop
+name: Build and push release
 
 on:
   push:
-    branches:
-      - master
     tags:
       - '*.*.*'
 
