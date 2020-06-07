@@ -20,10 +20,7 @@ jobs:
         java-version: 11
     - name: build
       run: mvn -B package --file pom.xml
-    - name: Get branch name
-      id: branch_name
-      run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{steps.branch_name.outputs.branch_name}}.jar
+        name: artifact.jar
         path: target/**/*.jar
