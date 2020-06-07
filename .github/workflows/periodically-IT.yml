@@ -1,10 +1,10 @@
 # This workflow will execute integration tests once a day
 
-name: Execute integration tests
+name: Integration tests
 
 on:
   schedule:
-    - cron:  '0 * * * *'
+    - cron:  '0 0 * * *'
 
 jobs:
   build:
@@ -18,4 +18,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B integration-test -p integration-test --file pom.xml
+      run: mvn -B integration-test -P integration-test --file pom.xml
