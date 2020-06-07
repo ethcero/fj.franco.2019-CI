@@ -1,12 +1,11 @@
 # This workflow will execute tests on all branches except master and develop
 
-name: Execute unit tests
+name: Build branch and publish artifact
 
 on:
-  push:
-    branches-ignore:
-      - master
-      - develop
+  # Run tests for any PRs.
+  pull_request:
+
 
 jobs:
   build:
@@ -19,5 +18,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Execute unit tests
-      run: mvn -B test --file pom.xml
+    - name: build
+      run: mvn -B package --file pom.xml
+    - uses: actions/upload-artifact@v2
+      with:
+        name: artifact.jar
+        path: target/**/*.jar
