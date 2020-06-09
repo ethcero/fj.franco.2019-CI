@@ -4,7 +4,7 @@
 name: Build and push release
 
 on:
-  push:
+  push: # se podría usar `release` pero de esta forma puedo obtener sencillamente el tag para el Docker
     tags:
       - '*.*.*'
 
