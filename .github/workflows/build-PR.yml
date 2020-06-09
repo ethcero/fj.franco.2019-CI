@@ -1,4 +1,4 @@
-# This workflow will execute tests on all branches except master and develop
+# This workflow will execute tests and package when a pull request is issued. Will publish the artefact into the CI repository
 
 name: Build branch and publish artifact
 
