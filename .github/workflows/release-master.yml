@@ -1,4 +1,5 @@
-# This workflow will build a docker image from master where a tag is created. The image will be pushed to docker hub
+# This workflow will build a docker image from master when a tag is created. The image will be pushed to docker hub
+# Its uses JIB to build and push the Docker image
 
 name: Build and push release
 

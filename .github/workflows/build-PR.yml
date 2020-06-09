@@ -1,12 +1,11 @@
-# This workflow will execute tests on all branches except master and develop
+# This workflow will execute tests and package when a pull request is issued. Will publish the artefact into the CI repository
 
 name: Build branch and publish artifact
 
 on:
-  push:
-    branches-ignore:
-      - master
-      - develop
+  # Run tests for any PRs.
+  pull_request:
+
 
 jobs:
   build:
@@ -21,10 +20,7 @@ jobs:
         java-version: 11
     - name: build
       run: mvn -B package --file pom.xml
-    - name: Get branch name
-      id: branch_name
-      run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{steps.branch_name.outputs.branch_name}}.jar
+        name: artifact.jar
         path: target/**/*.jar
