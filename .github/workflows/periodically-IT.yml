@@ -17,5 +17,5 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build with Maven
+    - name: Execute integration tests
       run: mvn -B integration-test -P integration-test --file pom.xml

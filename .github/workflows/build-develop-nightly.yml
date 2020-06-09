@@ -1,4 +1,5 @@
-# This workflow will build a docker image from develop and pushing it to docker hub with the :nightly tag
+# This workflow will build a docker image from develop and pushing it to docker hub with the tag `nightly`
+# Its uses JIB to build and push the Docker image
 
 name: Build and push nightly develop
 
