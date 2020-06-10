@@ -20,6 +20,6 @@ jobs:
       with:
         java-version: 11
     - name: run mysql
-      run: docker-compose -d up
+      run: docker-compose up -d
     - name: Execute integration tests
       run: mvn -B integration-test -P integration-test -D-spring.datasource.url=jdbc:mysql://localhost/test?createDatabaseIfNotExist=true
