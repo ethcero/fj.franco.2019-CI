@@ -1,8 +1,23 @@
 package es.codeurjc.daw;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Comment {
 
-	private long id = -1;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@ManyToOne( fetch = FetchType.LAZY)
+	@JoinColumn(name="postId")
+	private Post post;
 
 	private String author;
 
@@ -17,11 +32,16 @@ public class Comment {
 	}
 
 
-	public long getId() {
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

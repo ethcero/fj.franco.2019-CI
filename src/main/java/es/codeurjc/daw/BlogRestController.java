@@ -40,7 +40,7 @@ public class BlogRestController {
 	}
 
 	@GetMapping("/post/{id}")
-	public ResponseEntity<FullPostDTO> getPost(@PathVariable long id) {
+	public ResponseEntity<FullPostDTO> getPost(@PathVariable Long id) {
 		FullPostDTO post = this.postService.getPost(id);
 		if (post == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,24 +50,23 @@ public class BlogRestController {
 
 	@PostMapping("/post")
 	public ResponseEntity<BasicPostDTO> newPost(@RequestBody NewPostDTO post) {
-		this.postService.addPost(post);
-		BasicPostDTO basc = modelMapper.map(post, BasicPostDTO.class);
+
+		BasicPostDTO basc = modelMapper.map(this.postService.addPost(post), BasicPostDTO.class);
 		return new ResponseEntity<>(basc, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/post/{postId}/comment")
-	public ResponseEntity<CommentDTO> newComment(@PathVariable long postId, @RequestBody CommentDTO comment) {
+	public ResponseEntity<CommentDTO> newComment(@PathVariable Long postId, @RequestBody CommentDTO comment) {
 		FullPostDTO post = this.postService.getPost(postId);
 		if (post == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		this.postService.saveComment(postId, comment);
 
-		return new ResponseEntity<>(comment, HttpStatus.CREATED);
+		return new ResponseEntity<>(this.postService.saveComment(postId, comment), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/post/{postId}/comment/{commentId}")
-	public ResponseEntity<CommentDTO> deleteComment(@PathVariable long postId, @PathVariable long commentId) {
+	public ResponseEntity<CommentDTO> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
 		FullPostDTO post = this.postService.getPost(postId);
 		if (post == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
