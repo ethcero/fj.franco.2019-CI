@@ -1,4 +1,4 @@
-package es.codeurjc.daw;
+package es.codeurjc.daw.e2e;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import es.codeurjc.daw.Comment;
+import es.codeurjc.daw.Post;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 

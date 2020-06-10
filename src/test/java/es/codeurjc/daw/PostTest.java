@@ -1,9 +1,9 @@
 package es.codeurjc.daw;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -12,15 +12,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import es.codeurjc.daw.dto.BasicPostDTO;
+
+@SpringBootTest(classes = {
+		Application.class,
+		H2TestProfileJPAConfig.class})
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @DisplayName("Unitary tests")
 public class PostTest {
@@ -48,9 +53,9 @@ public class PostTest {
 		  .andExpect(jsonPath("$.title", equalTo(post.getTitle())))
 		  .andReturn();
 
-		Post resultPost = objectMapper.readValue(
+		BasicPostDTO resultPost = objectMapper.readValue(
 			result.getResponse().getContentAsString(),
-			Post.class
+			BasicPostDTO.class
 		);
 
 		// COMPROBAMOS QUE EL POST SE HA CREADO CORRECTAMENTE
@@ -80,9 +85,9 @@ public class PostTest {
 		  )
 		  .andReturn();
 
-		Post resultPost = objectMapper.readValue(
+		BasicPostDTO resultPost = objectMapper.readValue(
 			createPostResult.getResponse().getContentAsString(),
-			Post.class
+				BasicPostDTO.class
 		);
 
 		// CREAMOS UN NUEVO COMENTARIO
