@@ -1,21 +1,27 @@
 package es.codeurjc.daw;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Post {
 
-
-	private long id = -1;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	private String title;
 
 	private String content;
 
-	private Map<Long, Comment> commentsMap = new HashMap<>();
+	@OneToMany(mappedBy = "post")
+	private List<Comment> commentsMap = new ArrayList<>();
 
 	public Post() {
 	}
@@ -35,20 +41,20 @@ public class Post {
 		this.title = title;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-	public Map<Long, Comment> getCommentsMap() {
-		return commentsMap;
-	}
-
-	public void setCommentsMap(Map<Long, Comment> commentsMap) {
+	public void setCommentsMap(List<Comment> commentsMap) {
 		this.commentsMap = commentsMap;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public void setId(long id) {
@@ -64,19 +70,19 @@ public class Post {
 	}
 
 	public List<Comment> getComments() {
-		return new ArrayList<>(this.commentsMap.values());
+		return this.commentsMap;
 	}
 
 	public Comment getComment(long id) {
-		return this.commentsMap.get(id);
+		return this.commentsMap.stream().filter(comment -> comment.getId() == id).findFirst().get();
 	}
 
 	public void addComment(Comment comment) {
-		this.commentsMap.put(comment.getId(), comment);
+		this.commentsMap.add(comment);
 	}
 
 	public void deleteComment(long commentId) {
-		this.commentsMap.remove(commentId);
+		this.commentsMap.removeIf(comment -> comment.getId() == commentId);
 	}
 
 	@Override
