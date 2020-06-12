@@ -20,4 +20,4 @@ jobs:
       with:
         java-version: 11
     - name: Execute sonar tests
-      run: mvn verify sonar:sonar
+      run: mvn verify -DskipTests sonar:sonar
