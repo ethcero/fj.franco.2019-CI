@@ -33,5 +33,5 @@ jobs:
 
     - name: deploy
       run: |
-        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/franco87/fj.franco.2019-CD/dispatches --data '{"event_type": "build_application", "client_payload": {"new_image": "franco87/practica-ci:$RELEASE_VERSION"}}'
+        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/franco87/fj.franco.2019-CD/dispatches --data "{\"event_type\": \"deploy_application\", \"client_payload\": {\"new_image\": \"franco87/practica-ci:$RELEASE_VERSION\"}}"
 
