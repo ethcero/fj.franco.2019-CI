@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 
+import es.codeurjc.daw.dto.BasicPostDTO;
 import es.codeurjc.daw.dto.CommentDTO;
 import es.codeurjc.daw.dto.NewPostDTO;
 import es.codeurjc.daw.dto.FullPostDTO;
@@ -30,7 +31,7 @@ public class BlogWebController {
 		FullPostDTO post = this.postService.getPost(id);
 		if (post == null) {
 			model.addAttribute("errorMessage", "No existe un post con id " + id);
-			return "error";
+			return "blogError";
 		}
 		Object userName = session.getAttribute("userName");
 		model.addAttribute("userName", userName != null ? userName : "");
@@ -45,8 +46,8 @@ public class BlogWebController {
 
 	@PostMapping("/post")
 	public String post(Model model, NewPostDTO post) {
-		this.postService.addPost(post);
-		return "redirect:/post/" + post.getId();
+		BasicPostDTO dto = this.postService.addPost(post);
+		return "redirect:/post/" + dto.getId();
 	}
 
 	@PostMapping("/post/{id}/comment")
@@ -55,7 +56,7 @@ public class BlogWebController {
 		FullPostDTO post = this.postService.getPost(id);
 		if (post == null) {
 			model.addAttribute("errorMessage", "No existe un post con id " + id);
-			return "error";
+			return "blogError";
 		}
 		this.postService.saveComment(post.getId(), comment);
 		return "redirect:/post/" + post.getId();
@@ -66,12 +67,12 @@ public class BlogWebController {
 		FullPostDTO post = this.postService.getPost(postId);
 		if (post == null) {
 			model.addAttribute("errorMessage", "No existe un post con id " + postId);
-			return "error";
+			return "blogError";
 		}
 		CommentDTO comment = this.postService.getComment(postId, commentId);
 		if (comment == null) {
 			model.addAttribute("errorMessage", "No existe un comentario con id " + commentId);
-			return "error";
+			return "blogError";
 		}
 		this.postService.deleteComment(postId, commentId);
 		return "redirect:/post/" + post.getId();
