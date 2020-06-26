@@ -1,0 +1,17 @@
+# This workflow will dispatch a hook to the CD repository in order to deploy the application
+
+name: Dispatch deployment
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: |
+        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/franco87/fj.franco.2019-CD/dispatches --data '{"event_type": "build_application"}'
